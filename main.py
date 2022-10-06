@@ -4,7 +4,6 @@ import subprocess
 import json
 import telebot
 from time import sleep
-bot = telebot.TeleBot("")
 
 def get_curs():
     url = 'https://mironline.ru/support/list/kursy_mir/'
@@ -35,9 +34,11 @@ def get_curs():
 
 
 def send_call():
+    bot = telebot.TeleBot("")
     with open('curs.json', 'r') as file:
         curs = json.load(file)
     num = curs['Казахстанский тенге']
+
 
     with open('db.json', 'r') as file:
         db = json.load(file)
