@@ -44,7 +44,7 @@ def send_call():
         db = json.load(file)
 
     for user, user_num in db.items():
-        if user_num >= num:
+        if user_num <= num:
             bot.send_message(int(user), f'Курс {num}')
 
 
