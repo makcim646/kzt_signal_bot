@@ -50,7 +50,7 @@ def send_call():
 
 
 if __name__ == '__main__':
-    proc = subprocess.Popen('python bot.py', shell=True)
+    proc = subprocess.Popen('python3 bot.py', shell=True)
     while True:
         get_curs()
         send_call()
