@@ -1,3 +1,4 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import subprocess
@@ -5,13 +6,13 @@ import json
 import telebot
 from time import sleep
 
+
 def get_curs():
     url = 'https://mironline.ru/support/list/kursy_mir/'
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:105.0) Gecko/20100101 Firefox/105.0'}
 
     r = requests.get(url, headers=headers)
     soup = BeautifulSoup(r.text, 'lxml')
-
     p_list = soup.find_all('p')
     p_list = p_list[3:25]
 
@@ -39,7 +40,6 @@ def send_call():
         curs = json.load(file)
     num = curs['Казахстанский тенге']
 
-
     with open('db.json', 'r') as file:
         db = json.load(file)
 
@@ -50,8 +50,15 @@ def send_call():
 
 
 if __name__ == '__main__':
-    proc = subprocess.Popen('python3 bot.py', shell=True)
+    if os.name == 'nt':
+        proc = subprocess.Popen('python.exe bot.py', shell=True)
+    else:
+        proc = subprocess.Popen('python3 bot.py', shell=True)
+
     while True:
-        get_curs()
-        send_call()
-        sleep(60*60)
+        try:
+            get_curs()
+            send_call()
+            sleep(60*60)
+        except Exception as e:
+            print(e)
